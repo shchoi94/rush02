@@ -3,11 +3,10 @@
 #include <stdlib.h>
 #include "rush02.h"
 
-char *ft_read_dict(char *pathname, int *len)
+void ft_read_dict(char *pathname,char *buff, int *len)
 {
 	int fd;
 	int len_dict;
-	char buff[1000];
 
 	fd = open(pathname, O_RDONLY);//읽기 전용//성공시 파일디스크립터 반환, 실패시 -1 반환
 	if (fd == -1)
@@ -17,7 +16,6 @@ char *ft_read_dict(char *pathname, int *len)
 	len_dict = read(fd, buff, 1000);//read함수는 읽어들인 바이트수를 반환한다.
 	*len = len_dict;
 	close(fd);//파일을 닫는다.
-	return (buff);
 }
 
 t_data *ft_dict_to_data(char *arr, int line)
@@ -68,7 +66,7 @@ t_data *ft_dict_to_data(char *arr, int line)
 		}
 		find = &pos[i];
 		*find = '\0';
-		ft_strcpy((data_arr[j].value), pos);
+		ft_strcpy((data_arr[j].val), pos);
 		j++;
 		pos=++find;
 	}
