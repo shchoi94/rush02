@@ -18,57 +18,45 @@ void ft_read_dict(char *pathname,char *buff, int *len)
 	close(fd);//파일을 닫는다.
 }
 
-t_data *ft_dict_to_data(char *arr, int line)
+t_data *ft_str_parsing(char *str, int line)
 {
 	int i;
 	int j;
-	char *pos;
-	char *find;
+	int k;
 	t_data *data_arr;
-	data_arr = (t_data *) malloc(sizeof(t_data) * line);//dict 줄수 만큼 data_arr배열크기로 동적할당
-	pos = arr;
+
+	data_arr = (t_data *)malloc(sizeof(t_data) * (line + 1));//dict 줄수 만큼 data_arr배열크기로 동적할당
+
 	i = 0;
-	j = 0;
-	while (j < line)
+	j = -1;
+	printf("%d\n", line);
+	while(++j < line)
 	{
-		while (pos[i] != ' ')
-		{
-			if(pos[i]<'0' || pos[i]>'9')
-			{
-				return (0);
-			}
+		while (str[i] == '\n')
 			i++;
-		}
-		find = &pos[i];
-		*find = '\0';
-		ft_strcpy(data_arr[j].key, pos);
-		pos = ++find;
-		i = 0;
-		while (pos[i] != ':')
+		while(!(str[i] >= '0' && str[i] <= '9'))
 		{
-			if(pos[i]!=' ')
-				return (0);
-			i++;
+			return (0);
 		}
-		while(!((pos[i]>='a' && pos[i]<='z') || (pos[i]>='A'&&pos[i]<='Z')))
-		{
-			if(pos[i]!=' ')
-				return (0);
+		k = 0;
+		while(str[i] >= '0' && str[i] <= '9')
+			data_arr[j].key[k++] = str[i++];
+		data_arr[j].key[k] = '\0';
+		printf("key : %s, ", data_arr[j].key);
+		while (str[i] == ' ')
 			i++;
-		}
-		pos=&pos[i];
-		i=0;
-		while(pos[i]!='\n')
-		{
-			if(!((pos[i]>='a' && pos[i]<='z') || (pos[i]>='A'&&pos[i]<='Z')))
-				return (0);
+		if (str[i] == ':')
 			i++;
-		}
-		find = &pos[i];
-		*find = '\0';
-		ft_strcpy((data_arr[j].val), pos);
-		j++;
-		pos=++find;
+		else
+			return (0);
+		while (str[i] == ' ')
+			i++;
+		k = 0;
+		while ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))
+			data_arr[j].val[k++] = str[i++];
+		data_arr[j].val[k] = '\0';
+		printf("val : %s\n", data_arr[j].val);
 	}
+	*data_arr[line].key =  0;
 	return (data_arr);
 }
