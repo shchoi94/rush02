@@ -128,8 +128,8 @@ t_data  *ft_get_data_arr(char *dict)
 	int line=0;
 	char str[1000];
 	t_data *data;
-	ft_check_dict_info(dict, &size, &line);
 	ft_read_dict(dict,str, &size);
+	ft_check_dict_info(str, &size, &line);
 	data = ft_dict_to_data(dict, line);
 	return (data);
 }

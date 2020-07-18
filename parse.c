@@ -2,16 +2,18 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "rush02.h"
-
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
 void ft_read_dict(char *pathname,char *buff, int *len)
 {
 	int fd;
 	int len_dict;
 
-	fd = open(pathname, O_RDONLY);//읽기 전용//성공시 파일디스크립터 반환, 실패시 -1 반환
+	fd = open(pathname,  O_RDWR);//읽기 전용//성공시 파일디스크립터 반환, 실패시 -1 반환
 	if (fd == -1)
 	{
-		//파일 읽기 실패시..처리 사항
+		write(1,"file not open",13);//파일 읽기 실패시..처리 사항
 	}
 	len_dict = read(fd, buff, 1000);//read함수는 읽어들인 바이트수를 반환한다.
 	*len = len_dict;
