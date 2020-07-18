@@ -134,6 +134,7 @@ t_data  *ft_get_data_arr(char *dict)
 	int line;
 	char str[1000];
 	t_data *data;
+<<<<<<< HEAD
 
 	ft_read_dict(dict,str, &size);
 	ft_check_dict_info(str, &size, &line);
@@ -141,6 +142,11 @@ t_data  *ft_get_data_arr(char *dict)
 	data = ft_str_parsing(str, line);
 	printf("---------\n");
 	printf("\nval : %s\n", data[1].val);
+=======
+	ft_read_dict(dict,str, &size);
+	ft_check_dict_info(str, &size, &line);
+	data = ft_dict_to_data(dict, line);
+>>>>>>> 4d3fd33dabcfffc9405a8652eb636ee29f9805c8
 	return (data);
 }
 
